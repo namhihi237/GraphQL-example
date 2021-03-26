@@ -40,12 +40,11 @@ export const typeDefs = gql`
     }
 
     type Query {
-        me: Account
         users: [User]
         user(id: Int!): User
         books: [Book]
         book(id: Int!): Book
-        login(userName: String!, password: String!): LoginMutationResponse
+        login(userName: String!, password: String!): MutationResponse
     }
 
     type Mutation {
@@ -53,7 +52,7 @@ export const typeDefs = gql`
             userName: String!
             password: String!
             role: Int!
-        ): RegisterMutationResponse
+        ): MutationResponse
 
         createUser(name: String): User
         deleteUser(id: Int!): User

@@ -19,6 +19,7 @@ const AccountQueries = {
             status: "400",
             success: false,
             message: "username or password is incorrect",
+            token: " ",
         };
     },
 };
