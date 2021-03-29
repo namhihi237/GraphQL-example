@@ -24,7 +24,6 @@ export const typeDefs = gql`
         success: Boolean
         message: String
     }
-
     type RegisterMutationResponse implements MutationResponse {
         status: String
         success: Boolean

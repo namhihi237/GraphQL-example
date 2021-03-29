@@ -27,9 +27,5 @@ const resolvers = {
         ...BookMutation,
         ...AccountMutation,
     },
-    Account: {
-        id: (user) => user.id,
-        userName: (user) => user.userName,
-    },
 };
 export default resolvers;

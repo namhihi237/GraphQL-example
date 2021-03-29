@@ -1,3 +1,3 @@
 import { prisma } from "./prisma";
-
-export { prisma };
+import { envVariable } from "./env";
+export { prisma, envVariable };
