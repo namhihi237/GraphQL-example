@@ -1,5 +1,7 @@
 import { prisma } from "../../configs";
 import { deToken } from "../../utils";
+import * as yup from "yup";
+
 const AccountQueries = {
     login: async (parent, args, context, info) => {
         const account = await prisma.account.findFirst({
@@ -25,6 +27,25 @@ const AccountQueries = {
 };
 
 const AccountMutation = {
+    // register: {
+    //     validationSchema: yup.object({
+    //         userName: yup
+    //             .string()
+    //             .trim()
+    //             .required()
+    //             .min(3, "userName is too short"),
+    //         password: yup.string().trim().required(),
+    //     }),
+    //     resolver: async (parent, args, context, info) => {
+    //         await prisma.account.create({ data: args });
+    //         return {
+    //             status: "200",
+    //             success: true,
+    //             message: "Register account successfully",
+    //             userName: args.userName,
+    //         };
+    //     },
+    // },
     register: async (parent, args, context, info) => {
         await prisma.account.create({ data: args });
         return {

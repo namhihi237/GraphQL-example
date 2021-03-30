@@ -12,7 +12,7 @@ model Account {
   id Int @default(autoincrement()) @id
   userName String @db.VarChar(255) @unique
   password String @db.VarChar(255)
-  role Int 
+  role Role @default(USER)
 }
 
 model User {
@@ -27,4 +27,9 @@ model Book {
   title       String      @db.VarChar(255)
   author     User        @relation(fields: [authorId], references: [id])
   authorId   Int        
+}
+
+enum Role {
+  ADMIN
+  USER
 }
