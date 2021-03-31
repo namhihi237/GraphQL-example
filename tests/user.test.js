@@ -2,7 +2,7 @@ import { ApolloClient, gql } from "apollo-boost";
 import { prisma } from "../src/configs";
 import { client } from "./utils/getClient";
 import "cross-fetch/polyfill";
-
+require("../src/app");
 beforeAll(async () => {
     await prisma.account.deleteMany();
 });
@@ -20,10 +20,13 @@ describe("Tests the register Mutation", () => {
                 }
             }
         `;
-        const response = await client.mutate({ mutation: createUser });
-        const status = response.error.errors.message;
-        expect(status).toBe(
-            "String cannot represent a non string value: 123456"
+
+        await expect(
+            client.mutate({
+                mutation: createUser,
+            })
+        ).rejects.toThrowError(
+            "Network error: Response not successful: Received status code 400"
         );
     });
     it("should sign up account", async () => {

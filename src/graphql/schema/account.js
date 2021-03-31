@@ -1,16 +1,6 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-    enum Role {
-        ADMIN
-        USER
-    }
-    type Account {
-        id: ID
-        userName: String
-        role: Role
-        token: String
-    }
     interface MutationResponse {
         status: String
         success: Boolean
@@ -29,15 +19,21 @@ export default gql`
         message: String
         token: String
     }
+    enum Role {
+        ADMIN
+        USER
+    }
+    type Account {
+        id: ID
+        userName: String
+        role: Role
+        token: String
+    }
 
     type Query {
         login(userName: String!, password: String!): MutationResponse
     }
     type Mutation {
-        register(
-            userName: String!
-            password: String!
-            role: Role!
-        ): MutationResponse
+        register(userName: String!, password: String!, role: Role!): MutationResponse
     }
 `;

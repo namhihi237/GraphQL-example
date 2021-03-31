@@ -1,7 +1,9 @@
 import { prisma } from "../../configs";
-import { authenticated, validateRole } from "../../middlewares";
+import { authenticated, validateRole, schema } from "../../middlewares";
+import { validateInput } from "../../utils";
 import constant from "../../constant";
 const { ADMIN, USER } = constant;
+
 const BookQueries = {
     books: authenticated(
         validateRole([ADMIN, USER])((parent, args, context, info) =>
@@ -29,15 +31,15 @@ const BookQueries = {
 
 const BookMutation = {
     createBook: authenticated(
-        validateRole([ADMIN])((parent, args, context, info) =>
-            prisma.book.create({ data: args })
+        validateRole([ADMIN])(
+            validateInput(schema.bookSchema)((parent, args, context, info) =>
+                prisma.book.create({ data: args })
+            )
         )
     ),
 
     deleteBook: authenticated(
-        validateRole([0])((parent, args, context, info) =>
-            prisma.book.delete({ where: args })
-        )
+        validateRole([0])((parent, args, context, info) => prisma.book.delete({ where: args }))
     ),
 
     updateBook: authenticated(

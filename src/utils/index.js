@@ -1,3 +1,3 @@
 import { deToken, verifyToken } from "./token";
-
-export { deToken, verifyToken };
+import { validateInput } from "./handleErrorValidate";
+export { deToken, verifyToken, validateInput };
