@@ -1,6 +1,6 @@
 import { UserMutation, UserQueries } from "./user";
 import { BookMutation, BookQueries } from "./book";
-import { AccountMutation, AccountQueries } from "./account";
+import { AccountMutation } from "./account";
 import { __Type } from "graphql";
 
 const resolvers = {
@@ -19,7 +19,6 @@ const resolvers = {
     Query: {
         ...UserQueries,
         ...BookQueries,
-        ...AccountQueries,
     },
 
     Mutation: {

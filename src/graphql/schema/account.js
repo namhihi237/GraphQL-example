@@ -30,10 +30,8 @@ export default gql`
         token: String
     }
 
-    type Query {
-        login(userName: String!, password: String!): MutationResponse
-    }
-    type Mutation {
+    extend type Mutation {
         register(userName: String!, password: String!, role: Role!): MutationResponse
+        login(userName: String!, password: String!): MutationResponse
     }
 `;

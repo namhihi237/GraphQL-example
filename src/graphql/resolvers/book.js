@@ -3,7 +3,7 @@ import { authenticated, validateRole, schema } from "../../middlewares";
 import { validateInput } from "../../utils";
 import constant from "../../constant";
 const { ADMIN, USER } = constant;
-
+const { UserInputError } = require("apollo-server-express");
 const BookQueries = {
     books: authenticated(
         validateRole([ADMIN, USER])((parent, args, context, info) =>
@@ -15,6 +15,7 @@ const BookQueries = {
             )
         )
     ),
+
     book: authenticated(
         validateRole([ADMIN, USER])(async (parent, args, context, info) => {
             const result = await prisma.$queryRaw(
@@ -39,17 +40,27 @@ const BookMutation = {
     ),
 
     deleteBook: authenticated(
-        validateRole([0])((parent, args, context, info) => prisma.book.delete({ where: args }))
+        validateRole([ADMIN])(async (parent, args, context, info) => {
+            const book = await prisma.book.findUnique({ where: args });
+            if (!book) throw new UserInputError("id book is incorrect");
+            await prisma.book.delete({ where: args });
+            return {
+                id: book.id,
+                title: book.title,
+            };
+        })
     ),
 
     updateBook: authenticated(
-        validateRole([ADMIN, USER])((parent, args, context, info) => {
-            const { id, title, authorId } = args;
-            return prisma.book.update({
-                where: { id },
-                data: { title, authorId },
-            });
-        })
+        validateRole([ADMIN, USER])(
+            validateInput(schema.bookSchema)((parent, args, context, info) => {
+                const { id, title, authorId } = args;
+                return prisma.book.update({
+                    where: { id },
+                    data: { title, authorId },
+                });
+            })
+        )
     ),
 };
 

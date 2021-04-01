@@ -4,12 +4,11 @@ import typeDefs from "./graphql/schema";
 import resolvers from "./graphql/resolvers";
 import { verifyToken } from "./utils/token";
 import { envVariable } from "./configs";
-
-const express = require("express");
+import express from "express";
 
 const path = "/graph";
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
     typeDefs,
     resolvers,
     debug: envVariable.NODE_ENV === "test" ? true : false,
@@ -28,10 +27,8 @@ const server = new ApolloServer({
     },
 });
 
-export const app = express();
+const app = express();
 
 server.applyMiddleware({ app, path });
 
-app.listen({ port: process.env.PORT }, () =>
-    console.log(`🚀 Server ready ${server.graphqlPath}`)
-);
+app.listen({ port: process.env.PORT }, () => console.log(`🚀 Server ready ${server.graphqlPath}`));

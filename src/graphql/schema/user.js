@@ -7,12 +7,12 @@ export default gql`
         books: [Book]
     }
 
-    extend type Query {
+    type Query {
         users: [User]
         user(id: Int!): User
     }
 
-    extend type Mutation {
+    type Mutation {
         createUser(name: String): User
         deleteUser(id: Int!): User
         updateUser(id: Int!, name: String): User
