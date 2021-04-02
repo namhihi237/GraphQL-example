@@ -27,13 +27,13 @@ const AccountMutation = {
     register: validateInput(schema.registerSchema)(async (parent, args, context, info) => {
         try {
             await prisma.account.create({ data: args });
+            return {
+                status: "200",
+                success: true,
+                message: "Register account successfully",
+                userName: args.userName,
+            };
         } catch (error) {}
-        return {
-            status: "200",
-            success: true,
-            message: "Register account successfully",
-            userName: args.userName,
-        };
     }),
 };
 

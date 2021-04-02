@@ -90,6 +90,4 @@ describe("Tests the login account Mutation", () => {
     });
 });
 
-afterAll(async () => {
-    await prisma.account.deleteMany();
-});
+afterAll(async () => {});

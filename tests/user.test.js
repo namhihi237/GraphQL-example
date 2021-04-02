@@ -5,6 +5,7 @@ import "cross-fetch/polyfill";
 let authenticatedClient;
 const client = getClient();
 beforeAll(async (done) => {
+    await prisma.account.deleteMany();
     await prisma.book.deleteMany();
     await prisma.user.deleteMany();
     const createUser = gql`
@@ -153,8 +154,4 @@ describe("Tests delete user Mutation", () => {
     });
 });
 
-afterAll(async () => {
-    await prisma.user.deleteMany();
-    await prisma.book.deleteMany();
-    await prisma.user.deleteMany();
-});
+afterAll(async () => {});

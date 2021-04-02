@@ -7,6 +7,7 @@ let idUser;
 let bookId;
 const client = getClient();
 beforeAll(async () => {
+    await prisma.account.deleteMany();
     await prisma.book.deleteMany();
     await prisma.user.deleteMany();
     const createAccount = gql`
@@ -160,8 +161,7 @@ describe("Tests delete book Mutation", () => {
         expect(book).toBe(null);
     });
 });
+
 afterAll(async () => {
-    await prisma.user.deleteMany();
-    await prisma.book.deleteMany();
-    await prisma.user.deleteMany();
+   
 });
