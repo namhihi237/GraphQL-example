@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "nodemon -r esm ./src/index.js",
-        "test": "jest --silent"
+        "test": "jest --silent --detectOpenHandles"
     },
     "dependencies": {
         "@prisma/client": "^2.19.0",

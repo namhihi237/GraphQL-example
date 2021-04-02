@@ -1,3 +1,7 @@
 # GraphQL-example
-- authentication
-- authorization
+
+-   authentication
+-   authorization
+-   graphql
+-   apollo server
+-   jest

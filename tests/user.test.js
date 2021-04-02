@@ -4,7 +4,7 @@ import { getClient } from "./utils/getClient";
 import "cross-fetch/polyfill";
 let authenticatedClient;
 const client = getClient();
-beforeAll(async () => {
+beforeAll(async (done) => {
     await prisma.book.deleteMany();
     await prisma.user.deleteMany();
     const createUser = gql`
@@ -28,6 +28,7 @@ beforeAll(async () => {
     const response = await client.mutate({ mutation: loginAccount });
     const token = response.data.login.token;
     authenticatedClient = getClient(token);
+    done();
 });
 let idUser;
 describe("Tests the create user Mutation", () => {
@@ -72,7 +73,7 @@ describe("Tests show user Query", () => {
         `;
         const response = await authenticatedClient.query({ query: users });
         let len = response.data.users.length;
-        expect(len).toBe(1);
+        expect(len).toBeGreaterThan(0);
     });
 
     it(`should show a users id = ${idUser}  `, async () => {
