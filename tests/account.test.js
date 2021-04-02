@@ -89,3 +89,7 @@ describe("Tests the login account Mutation", () => {
         expect(token).toBeTruthy();
     });
 });
+
+afterAll(async () => {
+    await prisma.account.deleteMany();
+});

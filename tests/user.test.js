@@ -152,3 +152,9 @@ describe("Tests delete user Mutation", () => {
         expect(user).toBe(null);
     });
 });
+
+afterAll(async () => {
+    await prisma.user.deleteMany();
+    await prisma.book.deleteMany();
+    await prisma.user.deleteMany();
+});
